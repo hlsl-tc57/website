@@ -1,7 +1,8 @@
 baseURL = 'https://hlsl-tc57.github.io/blog'
 languageCode = 'en-us'
-title = 'Ecma TC57 - HLSL'
+title = 'Ecma TC57 - HLSL: Blog'
 theme = 'hugo-theme-terminal'
+pagination.pagerSize = 5
 
 ignoreLogs = ['warning-goldmark-raw-html']
 
@@ -19,6 +20,32 @@ ignoreLogs = ['warning-goldmark-raw-html']
     startLevel = 2
     endLevel = 3
     ordered = false
+  [markup.highlight]
+    noClasses = false
+
+[languages]
+  [languages.en]
+    languageName = "English"
+    title = "TC57"
+
+    [languages.en.params]
+      subtitle = "Ecma TC57 - HLSL- Blog"
+      owner = ""
+      keywords = ""
+      copyright = ""
+      menuMore = "Show more"
+      readMore = "Read more"
+      readOtherPosts = "Read other posts"
+      newerPosts = "Newer posts"
+      olderPosts = "Older posts"
+      missingContentMessage = "Page not found..."
+      missingBackButtonLabel = "Back to home page"
+      minuteReadingTime = "min read"
+      words = "words"
+
+      [languages.en.params.logo]
+        logoText = "TC57"
+        logoHomeLink = "/"
 
 [module]
   [[module.mounts]]
