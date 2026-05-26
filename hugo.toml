@@ -1,0 +1,49 @@
+baseURL = 'https://hlsl-tc57.github.io/blog'
+languageCode = 'en-us'
+title = 'Ecma TC57 - HLSL'
+theme = 'hugo-theme-terminal'
+
+ignoreLogs = ['warning-goldmark-raw-html']
+
+[params]
+  menu_style = "slide-menu"
+  github_doc_repository = "https://github.com/hlsl-tc57/blog"
+  github_doc_repository_branch = "main"
+  github_doc_repository_path = ""
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 3
+    ordered = false
+
+[module]
+  [[module.mounts]]
+    source = './content'
+    target= 'content'
+
+  [[module.mounts]]
+    source = 'monthly'
+    target = 'content/monthly'
+
+  [[module.mounts]]
+    source = 'assets'
+    target = 'content/assets'
+
+  [[module.mounts]]
+    source = '_index.md'
+    target = 'content/_index.md'
+
+[menu]
+  [[menu.main]]
+  name = "Home"
+  url = "/"
+  weight = 1
+
+  [[menu.main]]
+  name = "Monthly"
+  url = "/monthly"
+  weight = 2

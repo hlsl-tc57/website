@@ -1,0 +1,30 @@
+{{/*
+  Shortcode: children
+  Usage: {{< children order="asc" sections="false" maxDepth=0 >}}
+  Lists child pages (and optionally sections) under the current section.
+  Params:
+    - order: "asc" or "desc" (by file base name); default "asc"
+    - sections: "true" to include subsections; default "false"
+    - maxDepth: maximum recursion depth (0 for unlimited); default 0
+*/}}
+{{- $order := .Get "order" | default "asc" -}}
+{{- $includeSections := .Get "sections" | default "false" -}}
+
+{{- $pages := .Page.Pages -}}
+{{- if eq $includeSections "true" -}}
+  {{- $pages = $pages | union .Page.Sections -}}
+{{- end -}}
+
+{{- if eq $order "desc" -}}
+  {{- $pages = sort $pages "File.BaseFileName" "desc" -}}
+{{- else -}}
+  {{- $pages = sort $pages "File.BaseFileName" "asc" -}}
+{{- end -}}
+
+<ul>
+{{- range $pages -}}
+  {{- if not .Params.hidden -}}
+  <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+  {{- end -}}
+{{- end -}}
+</ul>
