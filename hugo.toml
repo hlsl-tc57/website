@@ -1,4 +1,4 @@
-baseURL = 'https://hlsl-tc57.github.io/blog'
+baseURL = 'https://hlsl-tc57.github.io/website'
 languageCode = 'en-us'
 title = 'Ecma TC57 - HLSL: Blog'
 theme = 'archie'
@@ -8,10 +8,10 @@ ignoreLogs = ['warning-goldmark-raw-html']
 
 [params]
   menu_style = "slide-menu"
-  github_doc_repository = "https://github.com/hlsl-tc57/blog"
+  github_doc_repository = "https://github.com/hlsl-tc57/website"
   github_doc_repository_branch = "main"
   github_doc_repository_path = ""
-  customCSS = ["style.css"]
+  customcss = ["style.css"]
 
 [markup]
   [markup.goldmark]

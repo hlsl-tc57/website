@@ -56,9 +56,7 @@ jobs:
         run: |
           hugo \
             --minify \
-            --baseURL "${{ steps.pages.outputs.base_url }}/" && \
-          cp -r assets/* ${{github.workspace}}/public/assets/ && \
-          cp -r static/assets/* ${{github.workspace}}/public/assets/
+            --baseURL "${{ steps.pages.outputs.base_url }}/"
 
 
       - name: Upload artifact
