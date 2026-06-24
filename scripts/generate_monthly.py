@@ -151,9 +151,125 @@ def load_proposal_frontmatters(repo_root):
                 continue
             if frontmatter.get("draft") is True:
                 continue
+            raw_status = frontmatter.get("status")
+            if raw_status is not None:
+                frontmatter["_proposal_status"] = raw_status
+            status = extract_proposal_implementation_status(file_path)
+            frontmatter["status"] = status
+            frontmatter["implementation_status"] = status
             frontmatters.append(frontmatter)
 
     return frontmatters
+
+
+def extract_markdown_section(lines, heading):
+    section_lines = []
+    found_heading = False
+
+    for raw_line in lines:
+        line = raw_line.rstrip("\n").strip()
+        if not line:
+            if found_heading:
+                section_lines.append("")
+            continue
+
+        if not found_heading:
+            if not line.startswith("#"):
+                continue
+            parts = line.split(None, 1)
+            if len(parts) < 2:
+                continue
+            if parts[1].strip() == heading:
+                found_heading = True
+            continue
+
+        if line.startswith("#"):
+            break
+        section_lines.append(line)
+
+    return section_lines if found_heading else None
+
+
+def parse_markdown_table(lines):
+    if not lines:
+        return []
+
+    # Search for a markdown table start inside the section.
+    header_index = None
+    for index in range(len(lines) - 1):
+        if "|" in lines[index] and "|" in lines[index + 1]:
+            separator_cells = [cell.strip() for cell in lines[index + 1].strip().strip("|").split("|")]
+            if separator_cells and all(re.match(r'^:?-{3,}:?$', cell) for cell in separator_cells):
+                header_index = index
+                break
+
+    if header_index is None:
+        return []
+
+    header_cells = [cell.strip() for cell in lines[header_index].strip().strip("|").split("|")]
+    if not header_cells:
+        return []
+
+    if not header_cells[0]:
+        header_cells[0] = ""
+
+    rows = []
+    for row_line in lines[header_index + 2:]:
+        if not row_line.strip():
+            break
+        if "|" not in row_line:
+            break
+
+        row_cells = [cell.strip() for cell in row_line.strip().strip("|").split("|")]
+        if len(row_cells) < len(header_cells):
+            row_cells.extend([""] * (len(header_cells) - len(row_cells)))
+        elif len(row_cells) > len(header_cells):
+            row_cells = row_cells[: len(header_cells)]
+
+        row = dict(zip(header_cells, row_cells))
+        rows.append(row)
+
+    return rows
+
+
+def format_github_reference(cell_text):
+    if not isinstance(cell_text, str):
+        return str(cell_text)
+
+    def replace_match(match):
+        org, repo, number = match.group(1), match.group(2), match.group(3)
+        url = match.group(0)
+        return f"[{org}/{repo}#{number}]({url})"
+
+    return re.sub(
+        r'https?://github\.com/([^/\s]+)/([^/\s]+)/(?:issues|pull)/(\d+)',
+        replace_match,
+        cell_text,
+    )
+
+
+def render_markdown_table(rows):
+    if not rows:
+        return []
+
+    headers = list(rows[0].keys())
+    table_lines = ["| " + " | ".join(headers) + " |", "|" + "|".join(["---"] * len(headers)) + "|"]
+    for row in rows:
+        cells = [format_github_reference(row.get(header, "") or "") for header in headers]
+        table_lines.append("| " + " | ".join(cells) + " |")
+
+    return table_lines
+
+
+def extract_proposal_implementation_status(file_path):
+    with open(file_path, "r", encoding="utf-8") as handle:
+        lines = handle.readlines()
+
+    section = extract_markdown_section(lines, "Implementation Status")
+    if section is None:
+        return []
+
+    return parse_markdown_table(section)
 
 
 def get_normative_updates(repo_root, beginning_commit, end_commit):
@@ -181,11 +297,17 @@ def build_proposal_index(proposals):
 
 
 def get_proposal_field(proposal, field, default=None):
-    if field in proposal:
-        return proposal[field]
     params = proposal.get("params")
     if isinstance(params, dict) and field in params:
         return params[field]
+    if field == "status":
+        if "_proposal_status" in proposal:
+            return proposal["_proposal_status"]
+        if field in proposal and not isinstance(proposal[field], list):
+            return proposal[field]
+        return default
+    if field in proposal:
+        return proposal[field]
     return default
 
 
@@ -228,7 +350,9 @@ def build_monthly_proposal_report(month, beginning, end, normative_updates):
         if before_status != after_status:
             status_changes.append((title, before_status or "<none>", after_status or "<none>"))
 
-    lines = ["---",f"title: Monthly Report for {month}", "---", ""]
+    lines = ["---",f"title: Monthly Report for {month}",
+            "date: " + datetime.datetime.now().strftime('%Y-%m-%d'),
+             "---", ""]
 
     if new_proposals:
         lines.append("## New proposals during the month")
@@ -249,6 +373,17 @@ def build_monthly_proposal_report(month, beginning, end, normative_updates):
     if normative_updates:
         lines.append("## Normative Updates")
         lines.extend(f"- {update}" for update in normative_updates)
+        lines.append("")
+
+    lines.append("## Implementation Status")
+    for title in all_titles:
+        proposal = end_index.get(title, beginning_index.get(title))
+        lines.append(f"### {title}")
+        implementation_rows = proposal.get("implementation_status", [])
+        if implementation_rows:
+            lines.extend(render_markdown_table(implementation_rows))
+        else:
+            lines.append("No status available")
         lines.append("")
 
     if not (new_proposals or removed_proposals or status_changes or normative_updates):
