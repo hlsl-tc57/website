@@ -160,3 +160,17 @@ img {
 figure img {
   border: 3px solid var(--color-background-pre-dark, #4a4a4a);
 }
+
+
+/* Dark mode toggle button styling */
+#dark-mode-toggle svg.feather {
+  stroke: #ffd700 !important; /* Bright gold/yellow for better visibility */
+}
+
+#dark-mode-toggle[data-theme="dark"] svg.feather {
+  stroke: #ffd700 !important; /* Gold for moon icon in dark mode */
+}
+
+#dark-mode-toggle[data-theme="light"] svg.feather {
+  stroke: #232333 !important; /* Dark for sun icon in light mode */
+}
