@@ -3,6 +3,7 @@ languageCode = 'en-us'
 title = 'Ecma TC57 - HLSL'
 theme = 'archie'
 pagination.pagerSize = 5
+canonifyurls = true
 
 ignoreLogs = ['warning-goldmark-raw-html']
 
