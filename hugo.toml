@@ -45,10 +45,6 @@ ignoreLogs = ['warning-goldmark-raw-html']
       minuteReadingTime = "min read"
       words = "words"
 
-      [languages.en.params.logo]
-        logoText = "TC57"
-        logoHomeLink = "https://hlsl-tc57.github.io/website/"
-
 [module]
   [[module.mounts]]
     source = './content'
