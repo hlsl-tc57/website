@@ -385,6 +385,7 @@ def build_monthly_proposal_report(month, beginning, end, normative_updates):
         if implementation_rows:
             lines.extend(render_markdown_table(implementation_rows))
         else:
+            lines.append("")
             lines.append("No implementation status available")
         lines.append("")
 
