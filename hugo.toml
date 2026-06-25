@@ -47,7 +47,7 @@ ignoreLogs = ['warning-goldmark-raw-html']
 
       [languages.en.params.logo]
         logoText = "TC57"
-        logoHomeLink = "/website"
+        logoHomeLink = "https://hlsl-tc57.github.io/website/"
 
 [module]
   [[module.mounts]]
