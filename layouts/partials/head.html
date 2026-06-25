@@ -46,3 +46,6 @@
 		{{ end }}
 	</nav>
 </header>
+{{- if eq .Site.Params.mode "toggle" -}}
+<link id="darkModeStyle" rel="stylesheet" href="{{ absURL "css/dark.css" }}" disabled>
+{{- end -}}

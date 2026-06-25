@@ -1,0 +1,153 @@
+/* Dark theme overrides */
+body {
+  color: var(--color-text-dark, #ffffff);
+  background-color: var(--color-background-dark, #202124);
+}
+
+::-moz-selection {
+  background: var(--color-primary-dark, #50fa7b);
+  color: #000000;
+  text-shadow: none;
+}
+
+::selection {
+  background: var(--color-primary-dark, #50fa7b);
+  color: #000000;
+  text-shadow: none;
+}
+
+hr {
+  border-block-start: 3px dotted var(--color-border-dark, #0066ff);
+}
+
+code {
+  background-color: var(--color-background-code-dark, #3a3a3a);
+  color: var(--color-text-dark, #ffffff);
+}
+
+pre {
+  background-color: var(--color-background-pre-dark, #272822);
+  border-color: var(--color-border-dark, #0066ff);
+}
+
+blockquote {
+  border-color: var(--color-border-dark, #0066ff);
+  color: var(--color-text-muted-dark, #dddddd);
+}
+
+/* Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-text-muted-dark, #dddddd);
+}
+
+h1::before { color: var(--color-primary-dark, #50fa7b); }
+h2::before { color: var(--color-primary-dark, #50fa7b); }
+h3::before { color: var(--color-primary-dark, #50fa7b); }
+h4::before { color: var(--color-primary-dark, #50fa7b); }
+h5::before { color: var(--color-primary-dark, #50fa7b); }
+h6::before { color: var(--color-primary-dark, #50fa7b); }
+
+/* Links */
+a {
+  color: var(--color-primary-dark, #0066ff);
+}
+
+a:hover {
+  color: var(--color-primary-dark, #0066ff);
+  opacity: 0.8;
+}
+
+/* Navigation */
+header > div.main {
+  background: var(--color-background-dark, #202124);
+}
+
+header > nav {
+  border-top: 3px dotted var(--color-border-dark, #0066ff);
+  background: var(--color-background-dark, #202124);
+  color: var(--color-text-dark, #ffffff);
+}
+
+header > nav > a {
+  color: var(--color-primary-dark, #0066ff);
+}
+
+header > nav > a:hover {
+  color: var(--color-text-dark, #ffffff);
+}
+
+/* Pagination */
+.pagination {
+  background-color: var(--color-background-dark, #202124);
+  border-color: var(--color-border-dark, #0066ff);
+}
+
+.pagination > span > a {
+  color: var(--color-primary-dark, #0066ff);
+  background-color: var(--color-background-dark, #202124);
+}
+
+.pagination > span > a:hover {
+  background-color: var(--color-text-dark, #ffffff);
+  color: var(--color-background-dark, #202124);
+}
+
+/* Post header */
+.post-header {
+  color: var(--color-text-muted-dark, #dddddd);
+}
+
+/* Post meta */
+.post-meta {
+  color: var(--color-text-muted-dark, #dddddd);
+}
+
+.post-meta > a {
+  color: var(--color-primary-dark, #0066ff);
+}
+
+/* Table */
+table {
+  color: var(--color-text-dark, #ffffff);
+}
+
+td,
+th {
+  background-color: var(--color-background-dark, #202124);
+  border-color: var(--color-border-dark, #0066ff);
+}
+
+/* Footer */
+footer {
+  color: var(--color-text-dark, #ffffff);
+  background-color: var(--color-background-dark, #202124);
+}
+
+footer > a {
+  color: var(--color-primary-dark, #0066ff);
+}
+
+/* Children list */
+.children-list {
+  color: var(--color-text-dark, #ffffff);
+}
+
+.children-list a {
+  color: var(--color-primary-dark, #0066ff);
+}
+
+.children-list .indent {
+  border-color: var(--color-border-dark, #0066ff);
+}
+
+/* Callout shortcode */
+.callout {
+  color: var(--color-text-dark, #ffffff);
+  background-color: var(--color-background-code-dark, #3a3a3a);
+  border-color: var(--color-border-dark, #0066ff);
+}
