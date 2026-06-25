@@ -1,6 +1,6 @@
 baseURL = 'https://hlsl-tc57.github.io/website'
 languageCode = 'en-us'
-title = 'Ecma TC57 - HLSL: Blog'
+title = 'Ecma TC57 - HLSL'
 theme = 'archie'
 pagination.pagerSize = 5
 

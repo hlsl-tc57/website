@@ -9,7 +9,7 @@ We publish [monthly status reports](monthly/).
 
 We are proudly part of
 
-![Ecma International](/assets/ecma-logo.svg?width=64)
+![Ecma International](assets/ecma-logo.svg)
 
 ## Getting Involved
 
