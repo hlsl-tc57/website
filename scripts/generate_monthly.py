@@ -375,7 +375,7 @@ def build_monthly_proposal_report(month, beginning, end, normative_updates):
         lines.extend(f"- {update}" for update in normative_updates)
         lines.append("")
 
-    lines.append("## Implementation Status")
+    lines.append("## Proposal Status")
     for title in all_titles:
         proposal = end_index.get(title, beginning_index.get(title))
         status = get_proposal_field(proposal, "status", "<unknown>")
@@ -385,7 +385,7 @@ def build_monthly_proposal_report(month, beginning, end, normative_updates):
         if implementation_rows:
             lines.extend(render_markdown_table(implementation_rows))
         else:
-            lines.append("No status available")
+            lines.append("No implementation status available")
         lines.append("")
 
     if not (new_proposals or removed_proposals or status_changes or normative_updates):
