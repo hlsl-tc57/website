@@ -151,3 +151,12 @@ footer > a {
   background-color: var(--color-background-code-dark, #3a3a3a);
   border-color: var(--color-border-dark, #0066ff);
 }
+
+/* Images - darker border for dark mode */
+img {
+  border: 3px solid var(--color-background-pre-dark, #4a4a4a);
+}
+
+figure img {
+  border: 3px solid var(--color-background-pre-dark, #4a4a4a);
+}
