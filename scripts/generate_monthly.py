@@ -378,7 +378,9 @@ def build_monthly_proposal_report(month, beginning, end, normative_updates):
     lines.append("## Implementation Status")
     for title in all_titles:
         proposal = end_index.get(title, beginning_index.get(title))
+        status = get_proposal_field(proposal, "status", "<unknown>")
         lines.append(f"### {title}")
+        lines.append(f"State: {status}")
         implementation_rows = proposal.get("implementation_status", [])
         if implementation_rows:
             lines.extend(render_markdown_table(implementation_rows))
