@@ -5,9 +5,16 @@ import datetime
 import json
 import os
 import re
+import shutil
 import subprocess
+import sys
 import tempfile
+from urllib.request import urlopen
 import yaml
+
+
+SPEC_PDF_URL = "http://hlsl-tc57.github.io/tc57/spec/hlsl.pdf"
+PROGRESS_BAR_TARGET_PAGES = 600
 
 def parse_month_arg(value):
     try:
@@ -292,6 +299,49 @@ def get_normative_updates(repo_root, beginning_commit, end_commit):
     return updates
 
 
+def download_pdf(url, destination, parser):
+    try:
+        with urlopen(url, timeout=60) as response:
+            with open(destination, "wb") as output_handle:
+                shutil.copyfileobj(response, output_handle)
+    except Exception as error:
+        parser.error(f"failed to download PDF from {url}: {error}")
+
+
+def generate_progress_bar(repo_root, progress_bar_path, parser):
+    progress_script = os.path.join(repo_root, "scripts", "progress_bar.py")
+    if not os.path.isfile(progress_script):
+        parser.error(f"progress bar script not found: {progress_script}")
+
+    output_path = os.path.abspath(progress_bar_path)
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
+    with tempfile.TemporaryDirectory(prefix="tc57-progress-bar-") as temp_dir:
+        pdf_path = os.path.join(temp_dir, "hlsl.pdf")
+        download_pdf(SPEC_PDF_URL, pdf_path, parser)
+
+        result = subprocess.run(
+            [sys.executable, progress_script, pdf_path, str(PROGRESS_BAR_TARGET_PAGES), "-o", output_path],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+
+    if result.returncode != 0:
+        error_text = (result.stderr or result.stdout or "unknown error").strip()
+        parser.error(f"failed to generate progress bar SVG: {error_text}")
+
+    website_root = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+    static_dir = os.path.join(website_root, "static")
+    if os.path.commonpath([output_path, static_dir]) == static_dir:
+        static_relative = os.path.relpath(output_path, start=static_dir).replace(os.sep, "/")
+        return f"/{static_relative}"
+
+    monthly_dir = os.path.join(website_root, "monthly")
+    relative_path = os.path.relpath(output_path, start=monthly_dir)
+    return relative_path.replace(os.sep, "/")
+
+
 def build_proposal_index(proposals):
     return {proposal.get("title", ""): proposal for proposal in proposals}
 
@@ -332,7 +382,7 @@ def format_proposal_entry(proposal):
     return f"- **{title}** ({status})" + (f" — {authors}" if authors else "")
 
 
-def build_monthly_proposal_report(month, beginning, end, normative_updates):
+def build_monthly_proposal_report(month, beginning, end, normative_updates, progress_bar_image_path=None):
     beginning_index = build_proposal_index(beginning)
     end_index = build_proposal_index(end)
 
@@ -353,6 +403,12 @@ def build_monthly_proposal_report(month, beginning, end, normative_updates):
     lines = ["---",f"title: Monthly Report for {month}",
             "date: " + datetime.datetime.now().strftime('%Y-%m-%d'),
              "---", ""]
+
+    if progress_bar_image_path:
+        lines.append(f"![SWAT progress bar]({progress_bar_image_path})")
+        lines.append("> Note: The progress bar is an extremely wild guess, which will get more")
+        lines.append("> accurate over time as we gain confidence estimating and tracking our pace.")
+        lines.append("")
 
     if new_proposals:
         lines.append("## New proposals during the month")
@@ -409,6 +465,10 @@ def parse_args():
         type=parse_month_arg,
         help="Monthly report date in YYYY-MM format.",
     )
+    parser.add_argument(
+        "--progress-bar",
+        help="Output path for an SVG progress bar to generate and embed in the report.",
+    )
 
     args = parser.parse_args()
 
@@ -418,11 +478,11 @@ def parse_args():
 
     verify_git_repo(repo_root, parser)
 
-    return parser, repo_root, args.month
+    return parser, repo_root, args.month, args.progress_bar
 
 
 def main():
-    parser, repo_root, month = parse_args()
+    parser, repo_root, month, progress_bar_path = parse_args()
     beginning_commit, end_commit = get_month_snapshot_commits(repo_root, month, parser)
 
     with (tempfile.TemporaryDirectory(prefix="tc57-monthly-begin-") as beginning_tree,
@@ -447,7 +507,17 @@ def main():
 
     normative_updates = get_normative_updates(repo_root, beginning_commit, end_commit)
 
-    report_text = build_monthly_proposal_report(month, beginning_proposals, end_proposals, normative_updates)
+    progress_bar_image_path = None
+    if progress_bar_path:
+        progress_bar_image_path = generate_progress_bar(repo_root, progress_bar_path, parser)
+
+    report_text = build_monthly_proposal_report(
+        month,
+        beginning_proposals,
+        end_proposals,
+        normative_updates,
+        progress_bar_image_path=progress_bar_image_path,
+    )
     print(report_text)
 
 
