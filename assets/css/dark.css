@@ -161,6 +161,22 @@ figure img {
   border: 3px solid var(--color-background-pre-dark, #4a4a4a);
 }
 
+/* Tables in dark mode */
+table th {
+  background-color: var(--color-background-pre-dark, #4f504c);
+  color: var(--color-text-dark, #ffffff);
+  border-color: var(--color-border-dark, #0066ff);
+}
+
+table td {
+  border-color: var(--color-border-dark, #0066ff);
+  color: var(--color-text-dark, #ffffff);
+}
+
+table tr:nth-child(even) {
+  background-color: var(--color-background-code-dark, #3a3a3a);
+}
+
 
 /* Dark mode toggle button styling */
 #dark-mode-toggle svg.feather {

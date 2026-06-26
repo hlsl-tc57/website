@@ -1,1 +1,6 @@
 img[alt="Ecma International"] { width: 128px; }
+
+/* Apply only when the theme toggle is explicitly in light mode. */
+html:has(#dark-mode-toggle[data-theme="light"]) table th {
+	background-color: #bdbdbd;
+}
