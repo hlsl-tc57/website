@@ -36,7 +36,7 @@
   </style>
   <rect class="pb-bg" width="516" height="60"/>
   <text class="pb-label" x="8" y="54" text-anchor="start">Progress: 6%</text>
-  <text class="pb-sublabel" x="508" y="54" text-anchor="end">Estimated Completion: December 10, 2033</text>
+  <text class="pb-sublabel" x="508" y="54" text-anchor="end">Estimated Completion: January 12, 2034</text>
   <rect class="pb-empty" x="8" y="8" width="500" height="30" rx="4"/>
   <rect x="8" y="8" width="30.00" height="30" rx="4" fill="#4caf50"/>
   <rect x="34.00" y="8" width="4" height="30" fill="#4caf50"/>
