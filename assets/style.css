@@ -4,3 +4,7 @@ img[alt="Ecma International"] { width: 128px; }
 html:has(#dark-mode-toggle[data-theme="light"]) table th {
 	background-color: #bdbdbd;
 }
+
+html {
+  font-family: Arial, Helvetica, sans-serif;
+}
