@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="516" height="60">
+  <style>
+    :root {
+      --pb-bg:       #ffffff;
+      --pb-text:     #1a1a1a;
+      --pb-subtext:  #555555;
+      --pb-empty:    #d8d8d8;
+      --pb-border:   #888888;
+      --pb-tick-a:   rgba(0,0,0,0.50);
+      --pb-tick-b:   rgba(0,0,0,0.38);
+      --pb-tick-c:   rgba(0,0,0,0.24);
+      --pb-needle:   #1565c0;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --pb-bg:       #0d1117;
+        --pb-text:     #e6edf3;
+        --pb-subtext:  #8b949e;
+        --pb-empty:    #30363d;
+        --pb-border:   #656d76;
+        --pb-tick-a:   rgba(255,255,255,0.65);
+        --pb-tick-b:   rgba(255,255,255,0.48);
+        --pb-tick-c:   rgba(255,255,255,0.30);
+        --pb-needle:   #58a6ff;
+      }
+    }
+    .pb-bg      { fill: var(--pb-bg); }
+    .pb-label   { font-family: sans-serif; font-size: 12px; font-weight: bold; fill: var(--pb-text); }
+    .pb-sublabel{ font-family: sans-serif; font-size: 11px; fill: var(--pb-subtext); }
+    .pb-empty   { fill: var(--pb-empty); }
+    .pb-border  { fill: none; stroke: var(--pb-border); stroke-width: 1.5; }
+    .pb-tick-a  { stroke: var(--pb-tick-a); }
+    .pb-tick-b  { stroke: var(--pb-tick-b); }
+    .pb-tick-c  { stroke: var(--pb-tick-c); }
+    .pb-needle  { stroke: var(--pb-needle); stroke-width: 2; stroke-dasharray: 3,2; fill: none; }
+  </style>
+  <rect class="pb-bg" width="516" height="60"/>
+  <text class="pb-label" x="8" y="54" text-anchor="start">Progress: 8%</text>
+  <text class="pb-sublabel" x="508" y="54" text-anchor="end">Estimated Completion: November 17, 2032</text>
+  <rect class="pb-empty" x="8" y="8" width="500" height="30" rx="4"/>
+  <rect x="8" y="8" width="40.00" height="30" rx="4" fill="#4caf50"/>
+  <rect x="44.00" y="8" width="4" height="30" fill="#4caf50"/>
+  <rect class="pb-border" x="8" y="8" width="500" height="30" rx="4"/>
+  <line class="pb-tick-c" x1="33.00" y1="30" x2="33.00" y2="38" stroke-width="1.0"/>
+  <line class="pb-tick-b" x1="58.00" y1="22" x2="58.00" y2="38" stroke-width="1.8"/>
+  <line class="pb-tick-c" x1="83.00" y1="30" x2="83.00" y2="38" stroke-width="1.0"/>
+  <line class="pb-tick-b" x1="108.00" y1="22" x2="108.00" y2="38" stroke-width="1.8"/>
+  <line class="pb-tick-c" x1="133.00" y1="30" x2="133.00" y2="38" stroke-width="1.0"/>
+  <line class="pb-tick-b" x1="158.00" y1="22" x2="158.00" y2="38" stroke-width="1.8"/>
+  <line class="pb-tick-c" x1="183.00" y1="30" x2="183.00" y2="38" stroke-width="1.0"/>
+  <line class="pb-tick-b" x1="208.00" y1="22" x2="208.00" y2="38" stroke-width="1.8"/>
+  <line class="pb-tick-c" x1="233.00" y1="30" x2="233.00" y2="38" stroke-width="1.0"/>
+  <line class="pb-tick-a" x1="258.00" y1="14" x2="258.00" y2="38" stroke-width="2.5"/>
+  <line class="pb-tick-c" x1="283.00" y1="30" x2="283.00" y2="38" stroke-width="1.0"/>
+  <line class="pb-tick-b" x1="308.00" y1="22" x2="308.00" y2="38" stroke-width="1.8"/>
+  <line class="pb-tick-c" x1="333.00" y1="30" x2="333.00" y2="38" stroke-width="1.0"/>
+  <line class="pb-tick-b" x1="358.00" y1="22" x2="358.00" y2="38" stroke-width="1.8"/>
+  <line class="pb-tick-c" x1="383.00" y1="30" x2="383.00" y2="38" stroke-width="1.0"/>
+  <line class="pb-tick-b" x1="408.00" y1="22" x2="408.00" y2="38" stroke-width="1.8"/>
+  <line class="pb-tick-c" x1="433.00" y1="30" x2="433.00" y2="38" stroke-width="1.0"/>
+  <line class="pb-tick-b" x1="458.00" y1="22" x2="458.00" y2="38" stroke-width="1.8"/>
+  <line class="pb-tick-c" x1="483.00" y1="30" x2="483.00" y2="38" stroke-width="1.0"/>
+  <line class="pb-needle" x1="48.00" y1="6" x2="48.00" y2="40"/>
+</svg>
