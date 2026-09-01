@@ -73,3 +73,10 @@ ignoreLogs = ['warning-goldmark-raw-html']
   name = "Monthly"
   url = "/monthly"
   weight = 2
+
+  [[menu.main]]
+  name = "RSS"
+  url = "/monthly/index.xml"
+  weight = 3
+  [menu.main.params]
+    icon = "rss"
