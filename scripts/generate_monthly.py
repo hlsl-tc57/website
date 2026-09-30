@@ -244,12 +244,16 @@ def format_github_reference(cell_text):
         return str(cell_text)
 
     def replace_match(match):
-        org, repo, number = match.group(1), match.group(2), match.group(3)
-        url = match.group(0)
-        return f"[{org}/{repo}#{number}]({url})"
+        existing_text, url, org, repo, number = match.groups()
+        reference = f"{org}/{repo}#{number}"
+        if existing_text is not None and existing_text != reference:
+            return f"[{existing_text} - {reference}]({url})"
+        return f"[{reference}]({url})"
 
     return re.sub(
-        r'https?://github\.com/([^/\s]+)/([^/\s]+)/(?:issues|pull)/(\d+)',
+        r'(?:\[([^\]]+)\]\()?'
+        r'(https?://github\.com/([^/\s]+)/([^/\s]+)/(?:issues|pull)/(\d+))'
+        r'(?(1)\))',
         replace_match,
         cell_text,
     )
